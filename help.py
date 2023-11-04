@@ -6,6 +6,11 @@ def Github输出变量(name,value):
     with open(GITHUB_OUTPUT, "a") as file:
         file.write(f"{name}={value}\n")
 
+def Github输出变量多行文本(name, value):
+    GITHUB_OUTPUT = os.getenv("GITHUB_OUTPUT", "")
+    with open(GITHUB_OUTPUT, "a") as file:
+        file.write(f"{name}<<EOF\n{value}\nEOF\n")
+
 def Github输出状态(name,value):
     GITHUB_STATE = os.getenv("GITHUB_STATE", "")
     with open(GITHUB_STATE, "a") as file:

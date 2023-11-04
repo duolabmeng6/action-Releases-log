@@ -130,4 +130,4 @@ if __name__ == '__main__':
 {{变更内容}}"""
     textTMP = textTMP.format(用了多少时间=hours, 最新发布信息=最新发布信息, 变更内容=变更内容)
     print(textTMP)
-    help.Github输出变量("Body",textTMP)
+    help.Github输出变量多行文本("Body",textTMP)
