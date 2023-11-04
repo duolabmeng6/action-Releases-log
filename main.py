@@ -18,8 +18,27 @@ def get_commit_history(repo):
                 break
     return commit_history
 
+def calculate_time_difference(time1, time2):
+    timestamp1 = time.mktime(time.strptime(time1, "%Y-%m-%d %H:%M"))
+    timestamp2 = time.mktime(time.strptime(time2, "%Y-%m-%d %H:%M"))
+    time_difference_seconds = abs(timestamp1 - timestamp2)
+    minutes = time_difference_seconds // 60
+    hours = minutes // 60
+    days = hours // 24
+    if days > 0:
+        formatted_time = f"{int(days)}天"
+    elif hours > 0:
+        formatted_time = f"{int(hours)}小时"
+    elif minutes > 0:
+        formatted_time = f"{int(minutes)}分钟"
+    else:
+        formatted_time = "一会儿"
+    return formatted_time
+
+
 
 if __name__ == '__main__':
+
     GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY')
     INPUT_TOKEN = os.environ.get('INPUT_GITHUB_TOKEN')
     g = Github(INPUT_TOKEN)
@@ -77,16 +96,11 @@ if __name__ == '__main__':
 
         result.append(
             {'author': author, 'message': message, 'short_hash': short_hash, 'time': date, 'full_hash': full_hash})
-    # 获取最后提交时间 和 第一条提交时间 计算相差多少个小时 如果小于24小时则显示小时 如果大于24小时则显示天
+    # 获取最后提交时间 和 第一条提交时间 计算相差多久 要好友的显示 比如 多少分钟,小时,天
     last_time = result[0]['time']
     first_time = result[-1]['time']
-    last_time = time.mktime(time.strptime(last_time, "%Y-%m-%d %H:%M"))
-    first_time = time.mktime(time.strptime(first_time, "%Y-%m-%d %H:%M"))
-    hours = (last_time - first_time) / 3600
-    if hours < 24:
-        hours = str(int(hours)) + '小时'
-    else:
-        hours = str(int(hours / 24)) + '天'
+
+    用了多少时间 = calculate_time_difference(last_time,first_time)
 
     # 删除result数组的最后一个元素
     del result[-1]
@@ -128,6 +142,6 @@ if __name__ == '__main__':
 {{最新发布信息}}
 
 {{变更内容}}"""
-    textTMP = textTMP.format(用了多少时间=hours, 最新发布信息=最新发布信息, 变更内容=变更内容)
+    textTMP = textTMP.format(用了多少时间=用了多少时间, 最新发布信息=最新发布信息, 变更内容=变更内容)
     print(textTMP)
     help.Github输出变量多行文本("Body",textTMP)
