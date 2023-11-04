@@ -3,5 +3,8 @@ ENV PYTHONPATH /app
 ADD . /app
 WORKDIR /app
 # RUN pip install PyGithub
+# 安装 git
+RUN apt-get update && apt-get install -y git
+
 CMD [ "python3", "/app/main.py" ]
 
