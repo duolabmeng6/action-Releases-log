@@ -1,0 +1,10 @@
+name: "action-Releases-log"
+description: "Automatically generating published logs is suitable for simple projects"
+author: "duolabmeng6"
+inputs:
+outputs:
+  Body:
+    description: "Body"
+runs:
+  using: "docker"
+  image: "Dockerfile"
