@@ -2,6 +2,9 @@ name: "action-Releases-log"
 description: "Automatically generating published logs is suitable for simple projects"
 author: "duolabmeng6"
 inputs:
+  token:
+    description: "secrets.GITHUB_TOKEN"
+    default: "token"
 outputs:
   Body:
     description: "Body"
