@@ -12,17 +12,19 @@ if __name__ == '__main__':
         # 如果命令运行失败，捕获异常
         print(f"Error: {e}")
         exit(0)
+        
+    exit(0)
 
-    #执行命令获取结果
-    cmd = """git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD"""
-    try:
-        result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, text=True)
-        git_log_output = result.stdout
-        print(git_log_output)
-    except subprocess.CalledProcessError as e:
-        # 如果命令运行失败，捕获异常
-        print(f"Error: {e}")
-        exit(0)
+    # #执行命令获取结果
+    # cmd = """git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD"""
+    # try:
+    #     result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, text=True)
+    #     git_log_output = result.stdout
+    #     print(git_log_output)
+    # except subprocess.CalledProcessError as e:
+    #     # 如果命令运行失败，捕获异常
+    #     print(f"Error: {e}")
+    #     exit(0)
 
     text = git_log_output
     #text = """多啦b梦|[发布]全新的版本ggg|f81cf92|2023-11-05 23:22|f81cf921090609288061e77f53ba472858b133a6
