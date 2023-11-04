@@ -146,9 +146,9 @@ if __name__ == '__main__':
 {{变更内容}}"""
     textTMP = releasesText
 
-    textTMP = textTMP.replace('{{用了多少时间}}', 用了多少时间)
-    textTMP = textTMP.replace('{{最新发布信息}}', 最新发布信息)
-    textTMP = textTMP.replace('{{变更内容}}', 变更内容)
+    textTMP = textTMP.replace("{{用了多少时间}}", 用了多少时间)
+    textTMP = textTMP.replace("{{最新发布信息}}", 最新发布信息)
+    textTMP = textTMP.replace("{{变更内容}}", 变更内容)
     
     
     help.Github输出变量多行文本("Body",textTMP)
