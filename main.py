@@ -135,13 +135,16 @@ if __name__ == '__main__':
         for msg in messages:
             变更内容 += f"- {msg}\n"
 
-    textTMP = f"""# GoEasyDesigner 窗口设计师
+    textTMP = """# GoEasyDesigner 窗口设计师
 
 奋斗了{{用了多少时间}}，本次更新内容如下：
 
 {{最新发布信息}}
 
 {{变更内容}}"""
-    textTMP = textTMP.format(用了多少时间=用了多少时间, 最新发布信息=最新发布信息, 变更内容=变更内容)
-    print(textTMP)
+    textTMP = textTMP.replace('{{用了多少时间}}', 用了多少时间)
+    textTMP = textTMP.replace('{{最新发布信息}}', 最新发布信息)
+    textTMP = textTMP.replace('{{变更内容}}', 变更内容)
+    
+    
     help.Github输出变量多行文本("Body",textTMP)
