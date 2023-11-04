@@ -41,6 +41,8 @@ if __name__ == '__main__':
 
     GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY')
     INPUT_TOKEN = os.environ.get('INPUT_GITHUB_TOKEN')
+    releasesText = os.environ.get('INPUT_releasesText')
+
     g = Github(INPUT_TOKEN)
     repo = g.get_repo(GITHUB_REPOSITORY)
     # 通过 Github 获取提交记录生成如下格式的文本
@@ -142,6 +144,8 @@ if __name__ == '__main__':
 {{最新发布信息}}
 
 {{变更内容}}"""
+    textTMP = releasesText
+    
     textTMP = textTMP.replace('{{用了多少时间}}', 用了多少时间)
     textTMP = textTMP.replace('{{最新发布信息}}', 最新发布信息)
     textTMP = textTMP.replace('{{变更内容}}', 变更内容)

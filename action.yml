@@ -7,7 +7,7 @@ inputs:
     default: "GITHUB_TOKEN"
   releasesText:
     description: "releasesText"
-    default: "{{变更内容}}"
+    default: "{{最新发布信息}}\n{{变更内容}}"
 outputs:
   Body:
     description: "Body"
