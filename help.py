@@ -11,10 +11,10 @@ def Github输出变量多行文本(name, value):
     with open(GITHUB_OUTPUT, "a") as file:
         file.write(f"{name}<<EOF\n{value}\nEOF\n")
     
-    # 读取这个文件内容看看
-    with open(GITHUB_OUTPUT, 'r') as file:
-        content = file.read()
-        print(content)
+    # # 读取这个文件内容看看
+    # with open(GITHUB_OUTPUT, 'r') as file:
+    #     content = file.read()
+    #     print(content)
 
 
 
