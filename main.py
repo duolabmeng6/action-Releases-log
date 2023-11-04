@@ -41,8 +41,9 @@ if __name__ == '__main__':
 
     GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY')
     INPUT_TOKEN = os.environ.get('INPUT_GITHUB_TOKEN')
-    releasesText = os.environ.get('INPUT_releasesText')
-    print("读取模板",releasesText)
+    INPUT_FILE = os.environ.get('INPUT_FILE')
+    print("读取模板",INPUT_FILE)
+    
     g = Github(INPUT_TOKEN)
     repo = g.get_repo(GITHUB_REPOSITORY)
     # 通过 Github 获取提交记录生成如下格式的文本
@@ -53,6 +54,9 @@ if __name__ == '__main__':
     # 多啦b梦|[新增]嘻嘻嘻功能|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
     # 多啦b梦|[加强]笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
     # 多啦b梦|[发布]全新牛逼plus的 加入了自动更新|2a2a82a|2023-11-05 01:19|2a2a82a71dd177379147d51846f08804e11be9b8
+
+    releasesText = repo.get_contents(INPUT_FILE).decoded_content.decode("utf-8")
+    print(releasesText)
 
     result = get_commit_history(repo)
     print(result)
@@ -152,3 +156,6 @@ if __name__ == '__main__':
     
     
     help.Github输出变量多行文本("Body",textTMP)
+
+
+    
