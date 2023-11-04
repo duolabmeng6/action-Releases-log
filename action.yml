@@ -7,7 +7,7 @@ inputs:
     default: "GITHUB_TOKEN"
   FILE:
     description: "INPUT_FILE"
-    default: ""
+    default: ".github/releasesText.md"
 outputs:
   Body:
     description: "Body"
