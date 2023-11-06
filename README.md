@@ -67,7 +67,6 @@ jobs:
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.NewVersion ) }}
           echo "${{ steps.create_body.outputs.Body }}"
-          echo "${{ steps.releasesText.outputs.releasesText }}"
 
       - name: 发布文件
         uses: ncipollo/release-action@v1
