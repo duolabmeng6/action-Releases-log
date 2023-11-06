@@ -192,5 +192,7 @@ if __name__ == '__main__':
     textTMP = textTMP.replace("{{变更内容}}", 变更内容)
 
     print(textTMP)
-
-    # help.Github输出变量多行文本("Body",textTMP)
+    if DEBUG:
+        pass
+    else:
+        help.Github输出变量多行文本("Body",textTMP)

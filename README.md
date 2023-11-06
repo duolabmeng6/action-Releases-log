@@ -61,6 +61,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILE: .github/releasesText.md
+          KEYS: bug,改进,优化,新增,删除
 
       - name: 查看版本号和更新日志
         run: |
@@ -81,3 +82,30 @@ jobs:
 
 
 ```
+
+```
+      - name: 获取更新日志
+        id: create_body
+        uses: duolabmeng6/action-Releases-log@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE: .github/releasesText.md
+          KEYS: bug,改进,优化,新增,删除
+```
+
+FILE内容是
+
+```
+# GoEasyDesigner 窗口设计师
+
+奋斗了{{用了多少时间}}，本次更新内容如下：
+
+{{最新发布信息}}
+
+{{变更内容}}
+```
+
+KEYS 用逗号分割 用作分组的关键字 检查到关键字就作为标签加入 这样子方便输入
+同时 提交中出现 [标签] 中括号包含的也会100%作为标签 以便想在更新记录加入新标签的时候要修改脚本 这样子直接兼容
+
+
