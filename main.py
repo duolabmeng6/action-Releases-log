@@ -13,7 +13,7 @@ def get_commit_history(repo):
     for commit in commits:
         commit_info = f"{commit.author.name}|{commit.commit.message}|{commit.sha[:7]}|{commit.commit.author.date.strftime('%Y-%m-%d %H:%M')}|{commit.sha}\n"
         commit_history += commit_info
-        if commit.commit.message.startswith('[发布]'):
+        if '发布' in commit.commit.message:
             k += 1
             if k == 2:
                 break
