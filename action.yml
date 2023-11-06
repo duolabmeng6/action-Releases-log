@@ -8,6 +8,9 @@ inputs:
   FILE:
     description: "INPUT_FILE"
     default: ".github/releasesText.md"
+  KEYS:
+    default: "bug,改进,优化,新增,删除"
+    description: "Use commas to separate keywords. If not, use brackets only"
 outputs:
   Body:
     description: "Body"

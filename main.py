@@ -3,6 +3,7 @@ import os
 from github import Github
 import help
 
+
 def get_commit_history(repo):
     # 获取提交记录
     commits = repo.get_commits()
@@ -17,6 +18,7 @@ def get_commit_history(repo):
             if k == 2:
                 break
     return commit_history
+
 
 def calculate_time_difference(time1, time2):
     timestamp1 = time.mktime(time.strptime(time1, "%Y-%m-%d %H:%M"))
@@ -36,31 +38,53 @@ def calculate_time_difference(time1, time2):
     return formatted_time
 
 
+DEBUG = True
 
 if __name__ == '__main__':
-
     GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY')
     INPUT_TOKEN = os.environ.get('INPUT_GITHUB_TOKEN')
     INPUT_FILE = os.environ.get('INPUT_FILE')
-    print("读取模板",INPUT_FILE)
-    
-    g = Github(INPUT_TOKEN)
-    repo = g.get_repo(GITHUB_REPOSITORY)
-    # 通过 Github 获取提交记录生成如下格式的文本
-    # 命令的结果 git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD
-    # 多啦b梦|[发布]全新的版本ggg|f81cf92|2023-11-05 23:22|f81cf921090609288061e77f53ba472858b133a6
-    # 多啦b梦|[新增]独特的功能|cee5f90|2023-11-05 01:22|cee5f90469c13ff3d3ba41424773439033a1e029
-    # 多啦b梦|[修复]一个神器的bug|60472ca|2023-11-05 01:21|60472ca310df178cd5f3ccb740c0b5e86ced62f9
-    # 多啦b梦|[新增]嘻嘻嘻功能|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
-    # 多啦b梦|[加强]笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
-    # 多啦b梦|[发布]全新牛逼plus的 加入了自动更新|2a2a82a|2023-11-05 01:19|2a2a82a71dd177379147d51846f08804e11be9b8
+    INPUT_KEYS = os.environ.get('INPUT_KEYS')
+    print("GITHUB_REPOSITORY", GITHUB_REPOSITORY)
+    print("读取模板文件路径", INPUT_FILE)
+    #GITHUB_REPOSITORY 不等于 None Debug = False
+    if GITHUB_REPOSITORY is not None:
+        DEBUG = False
 
-    releasesText = repo.get_contents(INPUT_FILE).decoded_content.decode("utf-8")
-    print(releasesText)
+    if DEBUG:
+        INPUT_KEYS = "bug,改进,优化,新增,删除"
+        GITHUB_REPOSITORY = 'duolabmeng6/learn_actions'
+        INPUT_TOKEN = "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"
+        releasesText = """# GoEasyDesigner 窗口设计师
+奋斗了{{用了多少时间}}，本次更新内容如下：
 
-    result = get_commit_history(repo)
-    print(result)
+{{最新发布信息}}
 
+{{变更内容}}
+        """
+        text = """多啦b梦|发布,全新的版本ggg|f81cf92|2023-11-05 23:22|f81cf921090609288061e77f53ba472858b133a6
+        多啦b梦|新增,独特的功能|cee5f90|2023-11-05 01:22|cee5f90469c13ff3d3ba41424773439033a1e029
+        多啦b梦|修复,一个神器的bug|60472ca|2023-11-05 01:21|60472ca310df178cd5f3ccb740c0b5e86ced62f9
+        多啦b梦|新增,嘻嘻嘻功能|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        多啦b梦|加强,笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        多啦b梦|太沙雕了啊,笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        多啦b梦|为什么会报错啊,笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        多啦b梦|有毒吧,笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        多啦b梦|发布,全新牛逼plus的 加入了自动更新|2a2a82a|2023-11-05 01:19|2a2a82a71dd177379147d51846f08804e11be9b8"""
+    else:
+        g = Github(INPUT_TOKEN)
+        repo = g.get_repo(GITHUB_REPOSITORY)
+        # 通过 Github 获取提交记录生成如下格式的文本
+        # 命令的结果 git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD
+        # 多啦b梦|[发布]全新的版本ggg|f81cf92|2023-11-05 23:22|f81cf921090609288061e77f53ba472858b133a6
+        # 多啦b梦|[新增]独特的功能|cee5f90|2023-11-05 01:22|cee5f90469c13ff3d3ba41424773439033a1e029
+        # 多啦b梦|[修复]一个神器的bug|60472ca|2023-11-05 01:21|60472ca310df178cd5f3ccb740c0b5e86ced62f9
+        # 多啦b梦|[新增]嘻嘻嘻功能|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        # 多啦b梦|[加强]笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
+        # 多啦b梦|[发布]全新牛逼plus的 加入了自动更新|2a2a82a|2023-11-05 01:19|2a2a82a71dd177379147d51846f08804e11be9b8
+        releasesText = repo.get_contents(INPUT_FILE).decoded_content.decode("utf-8")
+        text = get_commit_history(repo)
+        print(text)
 
     # #执行命令获取结果
     # cmd = """git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD"""
@@ -74,14 +98,7 @@ if __name__ == '__main__':
     #     print(f"Error: {e}")
     #     exit(0)
 
-    text = """多啦b梦|[发布]全新的版本ggg|f81cf92|2023-11-05 23:22|f81cf921090609288061e77f53ba472858b133a6
-多啦b梦|[新增]独特的功能|cee5f90|2023-11-05 01:22|cee5f90469c13ff3d3ba41424773439033a1e029
-多啦b梦|[修复]一个神器的bug|60472ca|2023-11-05 01:21|60472ca310df178cd5f3ccb740c0b5e86ced62f9
-多啦b梦|[新增]嘻嘻嘻功能|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
-多啦b梦|[加强]笑嘻嘻的|d99add4|2023-11-05 01:21|d99add4025f41622dbc1985083a35bf5a676f1fa
-多啦b梦|[发布]全新牛逼plus的 加入了自动更新|2a2a82a|2023-11-05 01:19|2a2a82a71dd177379147d51846f08804e11be9b8"""
-
-    text = result
+    KEYS = INPUT_KEYS.split(',')
 
     # 作者|提交信息|段hash|时间|完整hash
     # 参数分割出来
@@ -96,17 +113,37 @@ if __name__ == '__main__':
         short_hash = i[2]
         date = i[3]
         full_hash = i[4]
-        # 如果 message 为[发布] 则不添加LinkMsg
+        # 判断 message 中是否有 [ ] 如果有则获取中括号的内容作为group [标签] 分类
+        group = ""
+        if message.startswith('[') | message.endswith(']'):
+            group = message.split('[')[1].split(']')[0]
+            message = message.replace(f'[{group}]', '')
+        # 判断 message 中是否有KYES的关键字 如果有则获取中括号的内容作为group [标签] 分类
+        for key in KEYS:
+            if key in message:
+                group = key
+                break
+
         linkMsg = f"""[{{author}} {{short_hash}}](https://github.com/{GITHUB_REPOSITORY}/commit/{{hash}}) {{date}}"""
         message = message + linkMsg.format(author=author, short_hash=short_hash, hash=full_hash, date=date)
+        o = {
+            'author': author,
+            'message': message,
+            'short_hash': short_hash,
+            'time': date,
+            'full_hash': full_hash,
+            'group': group
+        }
+        # print(o)
 
         result.append(
-            {'author': author, 'message': message, 'short_hash': short_hash, 'time': date, 'full_hash': full_hash})
+            o
+        )
     # 获取最后提交时间 和 第一条提交时间 计算相差多久 要好友的显示 比如 多少分钟,小时,天
     last_time = result[0]['time']
     first_time = result[-1]['time']
 
-    用了多少时间 = calculate_time_difference(last_time,first_time)
+    用了多少时间 = calculate_time_difference(last_time, first_time)
 
     # 删除result数组的最后一个元素
     del result[-1]
@@ -125,13 +162,20 @@ if __name__ == '__main__':
     result_group = {}
     for i in result:
         message = i['message']
-        if message.startswith('[发布]'):
-            最新发布信息 = message.replace('[发布]', '')
+        # 检查是否有发布关键字 如果有则获取这个信息
+        if '发布' in message:
+            最新发布信息 = message
+            最新发布信息 = 最新发布信息.replace('[发布]', '')
+            最新发布信息 = 最新发布信息.replace('发布,', '')
             continue
 
-        tag = message.split('[')[1].split(']')[0]
+        tag = i['group']
+        # 如果没有标签则跳过
+        if tag == "":
+            continue
         if tag not in result_group:
             result_group[tag] = []
+
         result_group[tag].append(message.replace(f'[{tag}]', ''))
 
     # 输出结果
@@ -141,21 +185,12 @@ if __name__ == '__main__':
         for msg in messages:
             变更内容 += f"- {msg}\n"
 
-    textTMP = """# GoEasyDesigner 窗口设计师
 
-奋斗了{{用了多少时间}}，本次更新内容如下：
-
-{{最新发布信息}}
-
-{{变更内容}}"""
     textTMP = releasesText
-
     textTMP = textTMP.replace("{{用了多少时间}}", 用了多少时间)
     textTMP = textTMP.replace("{{最新发布信息}}", 最新发布信息)
     textTMP = textTMP.replace("{{变更内容}}", 变更内容)
-    
-    
-    help.Github输出变量多行文本("Body",textTMP)
 
+    print(textTMP)
 
-    
+    # help.Github输出变量多行文本("Body",textTMP)
